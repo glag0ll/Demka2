@@ -1,0 +1,67 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AvaloniaApplication6.ViewModels"
+             x:Class="AvaloniaApplication6.Views.OrderEditView"
+             x:DataType="vm:OrderEditViewModel">
+    <Grid RowDefinitions="Auto, *, Auto" Margin="20">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Image Source="/Assets/logo.png" Width="50" Height="50" Margin="10"/>
+            <TextBlock Text="{Binding Title}" FontSize="24" VerticalAlignment="Center" FontWeight="Bold"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" HorizontalAlignment="Center">
+            <StackPanel Spacing="10" Width="450" Margin="10">
+                <TextBlock Text="Код заказа:"/>
+                <TextBox Text="{Binding Code}"/>
+                
+                <TextBlock Text="Дата создания:"/>
+                <CalendarDatePicker SelectedDate="{Binding DateCreateDateTime}" HorizontalAlignment="Stretch"/>
+                
+                <TextBlock Text="Клиент:"/>
+                <ComboBox ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Fio}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
+                <TextBlock Text="Статус:"/>
+                <ComboBox ItemsSource="{Binding Statuses}" SelectedItem="{Binding SelectedStatus}" HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Text="Время аренды (мин):"/>
+                <TextBox Text="{Binding RentalTime}"/>
+                
+                <TextBlock Text="ID сотрудника:"/>
+                <TextBox Text="{Binding EmployeeId}"/>
+
+                <TextBlock Text="Услуги (зажмите Ctrl для выбора нескольких):" FontWeight="Bold"/>
+                <ListBox ItemsSource="{Binding AllServices}" 
+                         SelectedItems="{Binding SelectedServices}" 
+                         SelectionMode="Multiple,Toggle"
+                         Height="150" BorderThickness="1" BorderBrush="#76E383">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Costofhour, StringFormat='({0} руб/час)'}" 
+                                           FontSize="12" Opacity="0.6" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="20">
+            <Button Content="Сохранить" Command="{Binding SaveCommand}" Width="100" HorizontalContentAlignment="Center"/>
+            <Button Content="Отмена" Command="{Binding CancelCommand}" Width="100" HorizontalContentAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
